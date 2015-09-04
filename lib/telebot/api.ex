@@ -31,7 +31,7 @@ defmodule Telebot.Api do
   end
 
   defp process_status_code(403) do
-    raise "Invalid api_key. Please make sure you have added :telebot, :api_key to config file"
+    raise "Invalid api_key. Please make sure you vaild telegram bot key at :telebot, :api_key in config.exs"
   end
 
   defp process_status_code(s), do: s
