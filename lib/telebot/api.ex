@@ -3,11 +3,6 @@ defmodule Telebot.Api do
   use HTTPoison.Base
 
   @endpoint "https://api.telegram.org/bot"
-  #@exp_fields [:result]
-
-  #def run(api_key, url, params \\ %{}) do
-  #  get((api_key <> "/" <> url), [], params: params)
-  #end
 
   def get_me, do: execute("getMe")
 
@@ -35,9 +30,14 @@ defmodule Telebot.Api do
     @endpoint <> Application.get_env(:telebot, :api_key) <> "/" <> url
   end
 
+  defp process_status_code(403) do
+    raise "Invalid api_key. Please make sure you have added :telebot, :api_key to config file"
+  end
+
+  defp process_status_code(s), do: s
+
   defp process_response_body(body) do
     body
     |> Poison.decode!(keys: :atoms)
-    #|> Dict.take(@exp_fields)
   end
 end
