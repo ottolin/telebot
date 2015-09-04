@@ -25,7 +25,8 @@ mix deps.get
 ## Configuration
 In order to work with Telegram server, you need an api key.
 The key can be obtained by sending message to [BotFather](https://telegram.me/BotFather)
-After obtaining your key, add the folloing line to config.exs
+
+After obtaining your key, add the following lines to config.exs:
 ```elixir
 config :telebot, :api_key,
 "Your API Key Right Here"
@@ -55,5 +56,5 @@ Enjoy your bot by running
 iex -S mix
 ```
 
-By sending message to your registered bot account, you should now see the reply from bot!
+By sending messages to your registered bot account, you should now see the reply from bot!
 
