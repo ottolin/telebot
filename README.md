@@ -22,7 +22,7 @@ Then update dependencies by:
 mix deps.get
 ```
 
-### Telebot configuration
+## Configuration
 In order to work with Telegram server, you need an api key.
 The key can be obtained by sending message to [BotFather](https://telegram.me/BotFather)
 After obtaining your key, add the folloing line to config.exs
@@ -33,6 +33,7 @@ config :telebot, :api_key,
 
 Now you are able to write your own bot by implementing the behaviour Telebot.Handler.
 To simplify this process, just use Telebot.Handler.Base and override any callback that you are interested in.
+
 In the following example, you can have an echo Telegram bot in just a few lines of code.
 ```elixir
 defmodule MyEchoBot do
@@ -48,3 +49,11 @@ Finally, add your bot module to config.exs:
 config :telebot, :handlers,
 [MyEchoBot]
 ```
+
+Enjoy your bot by running
+```
+iex -S mix
+```
+
+By sending message to your registered bot account, you should now see the reply from bot!
+
