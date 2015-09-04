@@ -24,7 +24,7 @@ mix deps.get
 
 ### Telebot configuration
 In order to work with Telegram server, you need an api key.
-The key can be obtained by sending message to ([BotFather]https://telegram.me/BotFather)
+The key can be obtained by sending message to [BotFather](https://telegram.me/BotFather)
 After obtaining your key, add the folloing line to config.exs
 ```elixir
 config :telebot, :api_key,
