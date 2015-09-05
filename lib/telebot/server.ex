@@ -57,19 +57,23 @@ defmodule Telebot.Server do
   end
 
   def handle_call({:tick, offset}, _from, state) do
-    rv = Telebot.Api.get_updates offset
-    state1 = case rv do
-      {:ok, resp} ->
-        for msg <- resp.body[:result] do
-          for handler <- state.handlers do
-            spawn fn -> handler.process(msg) end
-          end
-        end
-        offset1 = next_offset(resp, offset)
-        %{state | update_offset: offset1}
-      _ -> state
+    if state.handlers != [] do
+      rv = Telebot.Api.get_updates offset
+      state1 = case rv do
+                 {:ok, resp} ->
+                   for msg <- resp.body[:result] do
+                     for handler <- state.handlers do
+                       spawn fn -> handler.process(msg) end
+                     end
+                   end
+                   offset1 = next_offset(resp, offset)
+                   %{state | update_offset: offset1}
+                 _ -> state
+               end
+      {:reply, state1, state1}
+    else
+      {:reply, state, state}
     end
-    {:reply, state1, state1}
   end
 
   defp next_offset(resp, default) do
