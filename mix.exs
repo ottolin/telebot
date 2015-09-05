@@ -9,7 +9,7 @@ defmodule Telebot.Mixfile do
      start_permanent: Mix.env == :prod,
      deps: deps,
      package: package,
-     description: "A Telegram bot plugin system for Elixir."
+     description: "A Telegram bot plugin system for Elixir.",
      name: "Telebot"
     ]
   end
