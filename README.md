@@ -2,7 +2,7 @@ Telebot
 =======
 
 Telegram bot plugin system written in Elixir.
-Working in progress. File upload (e.g. video/audio) is not yet supported.
+
 
 ## Install
 Add the following lines to mix.exs in your project
@@ -41,7 +41,7 @@ defmodule MyEchoBot do
   use Telebot.Handler.Base
 
   # overriding the text() callback
-  def text(chat, t), do: resp(chat, "Echo: " <> t)
+  def text(chat, t), do: Telebot.Api.send_message(chat.id, "Echo: " <> t)
 end
 ```
 
@@ -58,3 +58,6 @@ iex -S mix
 
 By sending messages to your registered bot account, you should now see the reply from bot!
 
+
+## Using Telebot.Api module
+Telebot.Api is an Elixir interface to the [telegram bot api](https://core.telegram.org/bots/api)
