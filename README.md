@@ -82,5 +82,3 @@ iex -S mix
 By sending messages to your registered bot account, you should now see the reply from bot!
 
 
-## Using Telebot.Api module
-Telebot.Api is an Elixir interface to the [telegram bot api](https://core.telegram.org/bots/api)
