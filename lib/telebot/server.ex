@@ -1,27 +1,42 @@
 defmodule Telebot.Server do
+  @doc """
+  Telebot.Server is a GenServer which holds the latest update offset and a
+  list of Telebot.Handler behaviour for processing the fetched updates.
+  """
+
   use GenServer
 
   defstruct update_offset: 0,
   handlers: []
 
+  @doc """
+  The start_link call requires a list of Telebot.Handler as argument.
+  The handlers will be called-back whenever new update is received.
+
+  Telebot.Server will ALWAYS registered using module name.
+
+  Example:
+      Telebot.Server.start_link([Echo], nil)
+  """
   def start_link({_handlers} = args, _opts) do
     GenServer.start_link(__MODULE__, args, name: __MODULE__)
   end
 
- # def get(call, param \\ %{}) do
- #   GenServer.call(__MODULE__, {:get, {call, param}})
- # end
-
+  @doc """
+  Return the latest GenServer state
+  """
   def info do
     GenServer.call(__MODULE__, :info)
   end
 
+  @doc """
+  By calling tick once, Telebot.Server will fetch updates from telegram server
+  and callback all handlers for the updates.
+
+  This is expected to be called in a loop (See Telebot.Tick).
+  """
   def tick do
     GenServer.call(__MODULE__, :tick)
-  end
-
-  def tick(offset) do
-    GenServer.call(__MODULE__, {:tick, offset})
   end
 
   # server callback
@@ -32,14 +47,6 @@ defmodule Telebot.Server do
     offset = next_offset(resp, 0)
     {:ok, %Telebot.Server{update_offset: offset, handlers: handlers}}
   end
-
- # def handle_call({:get, {call, param}}, _from, state) do
- #   rv = case Api.run state.api_key, call, param do
- #     {:ok, resp} -> resp.body[:result]
- #        _ -> :error
- #   end
- #   {:reply, rv, state}
- # end
 
   def handle_call(:info, _from, state) do
     {:reply, state, state}
