@@ -1,7 +1,18 @@
 Telebot
 =======
+[![Build Status](https://travis-ci.org/ottolin/telebot.svg?branch=master)](https://travis-ci.org/ottolin/telebot)
 
 Telegram bot plugin system written in Elixir.
+
+## Why Telegram bot?
+Telegram has a nice UI and fast server response.
+By using Telegram server infrastructure, you have a reliable communication
+backend system for your application free of charge!
+
+Also, Telegram bot api allow you to send customized keyboard to Telegram UI,
+which is available for both mobile and web, very easily.
+
+To ensure you can easily leverage the above things, this is where telebot kicks in.
 
 
 ## Install
