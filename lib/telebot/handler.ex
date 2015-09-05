@@ -58,10 +58,6 @@ defmodule Telebot.Handler.Base do
         )
       end
 
-      def resp(chat, text) do
-        Telebot.Api.send_message(chat.id, text)
-      end
-
       gen_call :text
       gen_call :audio
       gen_call :document
