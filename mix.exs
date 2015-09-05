@@ -3,11 +3,15 @@ defmodule Telebot.Mixfile do
 
   def project do
     [app: :telebot,
-     version: "0.0.1",
-     elixir: "~> 1.0-dev",
+     version: "0.1.0",
+     elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps,
+     package: package,
+     description: "A Telegram bot plugin system for Elixir."
+     name: "Telebot"
+    ]
   end
 
   # Configuration for the OTP application
@@ -33,6 +37,14 @@ defmodule Telebot.Mixfile do
     [
       {:httpoison, "~>0.7.2"},
       {:poison, "~>1.5"}
+    ]
+  end
+
+  defp package do
+    [
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/ottolin/telebot"},
+      contributors: ["Otto Lin"]
     ]
   end
 end
