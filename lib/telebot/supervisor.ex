@@ -25,6 +25,6 @@ defmodule Telebot.Supervisor do
       worker(Telebot.Server, [{handlers}, []]),
       worker(Telebot.Tick, [])
     ]
-    supervise(children, strategy: :one_for_one)
+    supervise(children, strategy: :one_for_one, max_restarts: 5, max_seconds: 1)
   end
 end

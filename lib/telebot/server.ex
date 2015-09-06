@@ -42,10 +42,7 @@ defmodule Telebot.Server do
   # server callback
   def init({handlers}) do
     HTTPoison.start
-    # Get initial offset
-    {:ok, resp} = Telebot.Api.get_updates
-    offset = next_offset(resp, 0)
-    {:ok, %Telebot.Server{update_offset: offset, handlers: handlers}}
+    {:ok, %Telebot.Server{update_offset: -1, handlers: handlers}}
   end
 
   def handle_call(:info, _from, state) do
@@ -56,20 +53,27 @@ defmodule Telebot.Server do
     handle_call({:tick, state.update_offset}, from, state)
   end
 
+  def handle_call({:tick, -1}, from, state) do
+    # Get initial offset
+    {:ok, resp} = Telebot.Api.get_updates
+    offset = next_offset(resp, 0)
+    handle_call({:tick, offset}, from, state)
+  end
+
   def handle_call({:tick, offset}, _from, state) do
     if state.handlers != [] do
       rv = Telebot.Api.get_updates offset
-      state1 = case rv do
+      offset1 = case rv do
                  {:ok, resp} ->
                    for msg <- resp.body[:result] do
                      for handler <- state.handlers do
                        spawn fn -> handler.process(msg) end
                      end
                    end
-                   offset1 = next_offset(resp, offset)
-                   %{state | update_offset: offset1}
-                 _ -> state
+                   next_offset(resp, offset)
+                 _ -> offset
                end
+      state1 = %{state | update_offset: offset1}
       {:reply, state1, state1}
     else
       {:reply, state, state}
