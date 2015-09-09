@@ -52,7 +52,7 @@ defmodule Telebot.Handler.Base do
         |> Enum.each(
           fn obj ->
             if m.message[obj] != nil do
-              apply(__MODULE__, obj, [m.message.chat, m.message[obj]])
+              apply(__MODULE__, obj, [m.message.from, m.message.chat, m.message[obj]])
             end
           end
         )
