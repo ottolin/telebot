@@ -64,7 +64,7 @@ defmodule MyEchoBot do
   use Telebot.Handler.Base
 
   # overriding the text() callback
-  def text(chat, t), do: Telebot.Api.send_message(chat.id, "Echo: " <> t)
+  def text(from, chat, t), do: Telebot.Api.send_message(chat.id, "Echo: " <> t)
 end
 ```
 
