@@ -51,8 +51,14 @@ defmodule Telebot.Handler.Base do
         ]
         |> Enum.each(
           fn obj ->
-            if m.message[obj] != nil do
+            # normal messages
+            if m[:message] != nil && m.message[obj] != nil do
               apply(__MODULE__, obj, [m.message.from, m.message.chat, m.message[obj]])
+            end
+
+            # channel_post messages
+            if m[:channel_post] != nil && m.channel_post[obj] != nil do
+              apply(__MODULE__, obj, [m.channel_post.from, m.channel_post.chat, m.channel_post[obj]])
             end
           end
         )
